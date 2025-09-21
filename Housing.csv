@@ -1,6 +1,6 @@
 price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheating,airconditioning,parking,prefarea,furnishingstatus
 13300000,7420,4,2,3,yes,no,no,no,yes,2,yes,furnished
-12250000,8960,4,4,4,yes,no,no,no,yes,3,no,furnished
+12250000,8960,,4,4,yes,no,no,no,yes,3,no,furnished
 12250000,9960,3,2,2,yes,no,yes,no,no,2,yes,semi-furnished
 12215000,7500,4,2,2,yes,no,yes,no,yes,3,yes,furnished
 11410000,7420,4,1,2,yes,yes,yes,no,yes,2,no,furnished
@@ -28,12 +28,12 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 8463000,6000,3,2,4,yes,yes,yes,no,yes,0,yes,semi-furnished
 8400000,8875,3,1,1,yes,no,no,no,no,1,no,semi-furnished
 8400000,7950,5,2,2,yes,no,yes,yes,no,2,no,unfurnished
-8400000,5500,4,2,2,yes,no,yes,no,yes,1,yes,semi-furnished
+8400000,5500,4,,2,yes,no,yes,no,yes,1,yes,semi-furnished
 8400000,7475,3,2,4,yes,no,no,no,yes,2,no,unfurnished
 8400000,7000,3,1,4,yes,no,no,no,yes,2,no,semi-furnished
 8295000,4880,4,2,2,yes,no,no,no,yes,1,yes,furnished
 8190000,5960,3,3,2,yes,yes,yes,no,no,1,no,unfurnished
-8120000,6840,5,1,2,yes,yes,yes,no,yes,1,no,furnished
+8120000,6840,5,1,,yes,yes,yes,no,yes,1,no,furnished
 8080940,7000,3,2,4,yes,no,no,no,yes,2,no,furnished
 8043000,7482,3,2,3,yes,no,no,yes,no,1,yes,furnished
 7980000,9000,4,2,4,yes,no,no,no,yes,2,no,furnished
@@ -44,7 +44,7 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 7700000,6480,3,2,4,yes,no,no,no,yes,2,no,unfurnished
 7700000,6000,4,2,4,yes,no,no,no,no,2,no,semi-furnished
 7560000,6000,4,2,4,yes,no,no,no,yes,1,no,furnished
-7560000,6000,3,2,3,yes,no,no,no,yes,0,no,semi-furnished
+7560000,6000,3,2,3,,no,no,no,yes,0,no,semi-furnished
 7525000,6000,3,2,4,yes,no,no,no,yes,1,no,furnished
 7490000,6600,3,1,4,yes,no,no,no,yes,3,yes,furnished
 7455000,4300,3,2,2,yes,no,yes,no,no,1,no,unfurnished
@@ -56,7 +56,7 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 7350000,6000,3,2,2,yes,yes,no,no,yes,1,no,semi-furnished
 7350000,6000,3,1,2,yes,no,no,no,yes,1,no,unfurnished
 7343000,11440,4,1,2,yes,no,yes,no,no,1,yes,semi-furnished
-7245000,9000,4,2,4,yes,yes,no,no,yes,1,yes,furnished
+7245000,9000,4,2,4,yes,yes,no,no,yes,1,,furnished
 7210000,7680,4,2,4,yes,yes,no,no,yes,1,no,semi-furnished
 7210000,6000,3,2,4,yes,yes,no,no,yes,1,no,furnished
 7140000,6000,3,2,2,yes,yes,no,no,no,1,no,semi-furnished
@@ -161,8 +161,8 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 5460000,3150,3,2,1,yes,yes,yes,no,yes,0,no,furnished
 5460000,6210,4,1,4,yes,yes,no,no,yes,0,no,furnished
 5460000,6100,3,1,3,yes,yes,no,no,yes,0,yes,semi-furnished
-5460000,6600,4,2,2,yes,yes,yes,no,no,0,yes,semi-furnished
-5425000,6825,3,1,1,yes,yes,yes,no,yes,0,yes,semi-furnished
+5460000,6600,,2,2,yes,yes,yes,no,no,0,yes,semi-furnished
+5425000,6825,3,1,1,,yes,yes,no,yes,0,yes,semi-furnished
 5390000,6710,3,2,2,yes,yes,yes,no,no,1,yes,furnished
 5383000,6450,3,2,1,yes,yes,yes,yes,no,0,no,unfurnished
 5320000,7800,3,1,1,yes,no,yes,no,yes,2,yes,unfurnished
@@ -194,8 +194,8 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 5040000,6600,3,1,1,yes,yes,yes,no,no,0,yes,furnished
 5033000,4800,2,1,1,yes,yes,yes,no,no,0,no,semi-furnished
 5005000,8150,3,2,1,yes,yes,yes,no,no,0,no,semi-furnished
-4970000,4410,4,3,2,yes,no,yes,no,no,2,no,semi-furnished
-4970000,7686,3,1,1,yes,yes,yes,yes,no,0,no,semi-furnished
+4970000,4410,,3,2,yes,no,yes,no,no,2,no,semi-furnished
+4970000,7686,3,1,1,,yes,yes,yes,no,0,no,semi-furnished
 4956000,2800,3,2,2,no,no,yes,no,yes,1,no,semi-furnished
 4935000,5948,3,1,2,yes,no,no,no,yes,0,no,semi-furnished
 4907000,4200,3,1,2,yes,no,no,no,no,1,no,furnished
@@ -212,7 +212,7 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 4900000,4646,3,1,2,yes,yes,yes,no,no,2,no,semi-furnished
 4900000,12900,3,1,1,yes,no,no,no,no,2,no,furnished
 4893000,3420,4,2,2,yes,no,yes,no,yes,2,no,semi-furnished
-4893000,4995,4,2,1,yes,no,yes,no,no,0,no,semi-furnished
+4893000,4995,4,2,1,yes,no,yes,no,no,0,no,
 4865000,4350,2,1,1,yes,no,yes,no,no,0,no,unfurnished
 4830000,4160,3,1,3,yes,no,no,no,no,0,no,unfurnished
 4830000,6040,3,1,1,yes,no,no,no,no,2,yes,semi-furnished
@@ -439,8 +439,8 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 3290000,5880,3,1,1,yes,no,no,no,no,1,no,unfurnished
 3255000,4500,2,1,1,no,no,no,no,no,0,no,semi-furnished
 3255000,3930,2,1,1,no,no,no,no,no,0,no,unfurnished
-3234000,3640,4,1,2,yes,no,yes,no,no,0,no,unfurnished
-3220000,4370,3,1,2,yes,no,no,no,no,0,no,unfurnished
+3234000,3640,,1,2,yes,no,yes,no,no,0,no,unfurnished
+3220000,4370,3,1,2,,no,no,no,no,0,no,unfurnished
 3220000,2684,2,1,1,yes,no,no,no,yes,1,no,unfurnished
 3220000,4320,3,1,1,no,no,no,no,no,1,no,unfurnished
 3220000,3120,3,1,2,no,no,no,no,no,0,no,furnished
@@ -451,7 +451,7 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 3150000,1650,3,1,2,no,no,yes,no,no,0,no,unfurnished
 3150000,3450,3,1,2,yes,no,yes,no,no,0,no,semi-furnished
 3150000,6750,2,1,1,yes,no,no,no,no,0,no,semi-furnished
-3150000,9000,3,1,2,yes,no,no,no,no,2,no,semi-furnished
+3150000,9000,3,1,2,yes,no,no,no,no,2,no,
 3150000,3069,2,1,1,yes,no,no,no,no,1,no,unfurnished
 3143000,4500,3,1,2,yes,no,no,no,yes,0,no,unfurnished
 3129000,5495,3,1,1,yes,no,yes,no,no,0,no,unfurnished
@@ -478,11 +478,11 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 2940000,5850,3,1,2,yes,no,yes,no,no,1,no,unfurnished
 2940000,4960,2,1,1,yes,no,no,no,no,0,no,unfurnished
 2940000,3600,3,1,2,no,no,no,no,no,1,no,unfurnished
-2940000,3660,4,1,2,no,no,no,no,no,0,no,unfurnished
-2940000,3480,3,1,2,no,no,no,no,no,1,no,semi-furnished
+2940000,3660,,1,2,no,no,no,no,no,0,no,unfurnished
+2940000,3480,3,1,2,no,no,no,no,no,1,no,
 2940000,2700,2,1,1,no,no,no,no,no,0,no,furnished
 2940000,3150,3,1,2,no,no,no,no,no,0,no,unfurnished
-2940000,6615,3,1,2,yes,no,no,no,no,0,no,semi-furnished
+2940000,6615,3,1,2,,no,no,no,no,0,no,semi-furnished
 2870000,3040,2,1,1,no,no,no,no,no,0,no,unfurnished
 2870000,3630,2,1,1,yes,no,no,no,no,0,no,unfurnished
 2870000,6000,2,1,1,yes,no,no,no,no,0,no,semi-furnished
@@ -499,7 +499,7 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 2660000,3934,2,1,1,yes,no,no,no,no,0,no,unfurnished
 2660000,2000,2,1,2,yes,no,no,no,no,0,no,semi-furnished
 2660000,3630,3,3,2,no,yes,no,no,no,0,no,unfurnished
-2660000,2800,3,1,1,yes,no,no,no,no,0,no,unfurnished
+2660000,2800,3,1,1,,no,no,no,no,0,no,unfurnished
 2660000,2430,3,1,1,no,no,no,no,no,0,no,unfurnished
 2660000,3480,2,1,1,yes,no,no,no,no,1,no,semi-furnished
 2660000,4000,3,1,1,yes,no,no,no,no,0,no,semi-furnished
@@ -538,9 +538,10 @@ price,area,bedrooms,bathrooms,stories,mainroad,guestroom,basement,hotwaterheatin
 1960000,3420,5,1,2,no,no,no,no,no,0,no,unfurnished
 1890000,1700,3,1,2,yes,no,no,no,no,0,no,unfurnished
 1890000,3649,2,1,1,yes,no,no,no,no,0,no,unfurnished
-1855000,2990,2,1,1,no,no,no,no,no,1,no,unfurnished
+1855000,2990,2,1,1,no,no,no,,no,1,no,unfurnished
 1820000,3000,2,1,1,yes,no,yes,no,no,2,no,unfurnished
 1767150,2400,3,1,1,no,no,no,no,no,0,no,semi-furnished
 1750000,3620,2,1,1,yes,no,no,no,no,0,no,unfurnished
 1750000,2910,3,1,1,no,no,no,no,no,0,no,furnished
 1750000,3850,3,1,2,yes,no,no,no,no,0,no,unfurnished
+
