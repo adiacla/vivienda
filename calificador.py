@@ -390,8 +390,12 @@ tabs = st.tabs([
 # Pestaña 1 - Subida de archivo
 # ----------------------------
 with tabs[0]:
-    st.header("Cargar el PDF original para validar la insignia")
-
+    st.markdown("## Examen de Inteligencia Artificial 2025 UNAB")
+    st.markdown(
+    """
+    📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_ID_NRC.ipynb)
+    """,  unsafe_allow_html=True)
+    st.markdown("Sube el PDF del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
     id_input = st.text_input("ID del estudiante", key="input_id")
     nrc_input = st.text_input("NRC del curso", key="input_nrc")
     uploaded_file = st.file_uploader("Subir archivo PDF", type=["pdf"])
@@ -426,7 +430,7 @@ with tabs[1]:
     if df.empty:
         st.info("No hay registros guardados todavía.")
     else:
-        st.dataframe(df, use_container_width=True)
+        st.dataframe(df, width='stretch')
 
 # ----------------------------
 # Pestaña 3 - Evaluar Taller
@@ -593,7 +597,7 @@ with tabs[4]:
             df_display = df_display[df_display["id_estudiante"] == estudiante_sel]
 
         st.subheader("Resumen")
-        st.dataframe(df_display.reset_index(drop=True), use_container_width=True)
+        st.dataframe(df_display.reset_index(drop=True), width='stretch')
 
         # Mostrar detalle: últimas entradas de taller y cuestionario para el estudiante seleccionado (si aplica)
         if estudiante_sel != "Todos":
@@ -613,7 +617,7 @@ with tabs[4]:
             if df_badges_det.empty:
                 st.write("No hay registros de badges para este estudiante con esa NRC (o no hay NRC en session).")
             else:
-                st.dataframe(df_badges_det, use_container_width=True)
+                st.dataframe(df_badges_det, width='stretch')
 
             # Detalle taller_resultados
             df_taller_det = pd.read_sql_query("""
@@ -626,7 +630,7 @@ with tabs[4]:
             if df_taller_det.empty:
                 st.write("No hay resultados de taller para este estudiante.")
             else:
-                st.dataframe(df_taller_det, use_container_width=True)
+                st.dataframe(df_taller_det, width='stretch')
 
             # Detalle cuestionario
             df_cuestion_det = pd.read_sql_query("""
@@ -639,7 +643,7 @@ with tabs[4]:
             if df_cuestion_det.empty:
                 st.write("No hay registros de cuestionario para este estudiante.")
             else:
-                st.dataframe(df_cuestion_det, use_container_width=True)
+                st.dataframe(df_cuestion_det, width='stretch')
 
             conn.close()
 
