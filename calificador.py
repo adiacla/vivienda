@@ -648,4 +648,15 @@ with tabs[4]:
             conn.close()
 
 st.write("")  # espacio final
+# ----------------------------
+# Botón para descargar la base de datos
+# ----------------------------
+with open(DB_PATH, "rb") as f:
+    st.download_button(
+        label="📥 Descargar base de datos SQLite",
+        data=f,
+        file_name="badges.db",
+        mime="application/octet-stream"
+    )
+
 
