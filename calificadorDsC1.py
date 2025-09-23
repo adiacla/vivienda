@@ -416,7 +416,7 @@ with tabs[0]:
     st.markdown("## Examen de Inteligencia Artificial 2025 UNAB")
     st.markdown(
     """
-    📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_ID_NRC.ipynb)
+    📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_Keras_Paso_a_Paso_plantilla.ipynb)
     """,  unsafe_allow_html=True)
     st.markdown("Sube el PDF del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
     id_input = st.text_input("ID del estudiante", key="input_id")
@@ -672,3 +672,4 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
