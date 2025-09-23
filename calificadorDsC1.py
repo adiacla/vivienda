@@ -401,13 +401,13 @@ st.set_page_config(page_title="Validador de Badges + Taller", layout="wide")
 st.title("Examen de IA y Ciencia de Datos")
 
 # Subtítulo con derechos reservados
-st.markdown("### Realizado por Alfredo Diaz  &nbsp;&nbsp;© UNB 2025")
+st.markdown("### Realizado por Alfredo Diaz © UNB 2025")
 
 # Imagen debajo
 st.image(
-    "https://apolo.unab.edu.co/files-asset/28174058/7-Alfredo-Antonio-Diaz-Claro.jpg?w=160&f=webp",
+    "https://apolo.unab.edu.co/files-asset/28174058/7-Alfredo-Antonio-Diaz-Claro.jpg",
     caption="Alfredo Antonio Diaz Claro",
-    use_column_width=True
+    width='stretch'
 )
 init_db()
 
@@ -683,6 +683,7 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
 
 
