@@ -397,7 +397,18 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
 # INTERFAZ STREAMLIT
 # ----------------------------
 st.set_page_config(page_title="Validador de Badges + Taller", layout="wide")
+# Título principal
+st.title("Examen de IA y Ciencia de Datos")
 
+# Subtítulo con derechos reservados
+st.markdown("### Realizado por Alfredo Diaz  &nbsp;&nbsp;© UNB 2025")
+
+# Imagen debajo
+st.image(
+    "https://apolo.unab.edu.co/files-asset/28174058/7-Alfredo-Antonio-Diaz-Claro.jpg?w=160&f=webp",
+    caption="Alfredo Antonio Diaz Claro",
+    use_column_width=True
+)
 init_db()
 
 tabs = st.tabs([
@@ -417,7 +428,8 @@ with tabs[0]:
     """
     📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_Keras_Paso_a_Paso_plantilla.ipynb)
     """,  unsafe_allow_html=True)
-    st.markdown("Sube el PDF del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
+    st.markdown("Sube cada PDF de uno en uno del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
+        st.markdown("### Es obligatorio subir los badge para realizar el taller y el examen")
     id_input = st.text_input("ID del estudiante", key="input_id")
     nrc_input = st.text_input("NRC del curso", key="input_nrc")
     uploaded_file = st.file_uploader("Subir archivo PDF", type=["pdf"])
@@ -447,7 +459,7 @@ with tabs[0]:
 # Pestaña 2 - Ver registros
 # ----------------------------
 with tabs[1]:
-    st.header("Registros en la Base de Datos")
+    st.header("Ver los Badges Cargados")
 
     df = obtener_registros()
 
@@ -671,6 +683,7 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
 
 
