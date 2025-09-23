@@ -429,7 +429,7 @@ with tabs[0]:
     📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_Keras_Paso_a_Paso_plantilla.ipynb)
     """,  unsafe_allow_html=True)
     st.markdown("Sube cada PDF de uno en uno del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
-        st.markdown("### Es obligatorio subir los badge para realizar el taller y el examen")
+    st.markdown("### Es obligatorio subir los badge para realizar el taller y el examen")
     id_input = st.text_input("ID del estudiante", key="input_id")
     nrc_input = st.text_input("NRC del curso", key="input_nrc")
     uploaded_file = st.file_uploader("Subir archivo PDF", type=["pdf"])
@@ -683,6 +683,7 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
 
 
