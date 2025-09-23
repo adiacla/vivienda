@@ -15,7 +15,7 @@ from google import genai
 # ----------------------------
 # CONFIGURACIÓN GEMINI
 # ----------------------------
-client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+client = genai.Client(api_key="AIzaSyDBK2Ou4-NS9kYjVrYtEAf8cwQ90k-d5uY")
 gemini_model = "gemini-2.0-flash"
 
 
@@ -240,9 +240,11 @@ def validar_badge_publico(url):
 # ----------------------------
 # FUNCIONES DE EVALUACIÓN (Gemini)
 # ----------------------------
-def evaluar_taller(contenido_estudiante: str):
+import re
+
+def evaluar_taller_redes_neuronales(contenido_estudiante: str):
     """
-    Evalúa el código enviado por el estudiante.
+    Evalúa el código entregado por el estudiante para el Taller de Redes Neuronales.
     Devuelve (nota_taller, feedback) o (None, error_message)
     """
     prompt = f"""
@@ -256,14 +258,14 @@ Criterios de evaluación:
 4. Optimización de hiperparámetros: función que pruebe combinaciones, evaluación con métricas (MSE, MAE).
 5. Informe y conclusiones: análisis de resultados, hallazgos del preprocesamiento, sensibilidad a hiperparámetros.
 
-Verifique el el archivo cargada tiene celdas donde se realiza cada paso. Si las celdas estan comentadas, no las considereo si estan sin codigo tampoco.
-Igualemente si el codigo no corre o tiene errores, evalue el codigo y no la ejecucion.
-Ademas revise que el codigo siga las mejores practicas de Python y Keras y tiene la lógica correcta.
+Genera:
+- Una calificación numérica entre 0 y 3.0.
+- Retroalimentación clara, profesional y técnica sobre los puntos anteriores.
+
 Código entregado por el estudiante:
 {contenido_estudiante}
-
-Genera una calificación numérica entre 0 y 1.5 y retroalimentación profesional clara y técnica.
 """
+
     try:
         response = client.models.generate_content(
             model=gemini_model,
@@ -272,19 +274,20 @@ Genera una calificación numérica entre 0 y 1.5 y retroalimentación profesiona
 
         feedback = response.text
 
-        # Buscar la primera aparición de un número con posible decimal
+        # Extraer la primera aparición de un número decimal como nota
         match = re.search(r"(\d+(\.\d+)?)", feedback)
         if match:
             nota_taller = float(match.group(1))
-            if nota_taller > 1.5:
-                nota_taller = 1.5
+            if nota_taller > 3.0:
+                nota_taller = 3.0
         else:
-            nota_taller = 1.0  # valor por defecto si no encuentra número
+            nota_taller = 1.5  # valor por defecto si no encuentra número
 
         return nota_taller, feedback
 
     except Exception as e:
         return None, f"Error en la llamada a la API: {e}"
+
 
 def evaluar_respuestas_abiertas(respuestas_estudiante):
     """
@@ -404,7 +407,7 @@ with tabs[0]:
     st.markdown("## Examen de Inteligencia Artificial 2025 UNAB")
     st.markdown(
     """
-    📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Taller_Evaluativo_Red_neuronal_vivienda.ipynb)
+    📥 [Descargar examen (Examen_ID_NRC.ipynb)](https://raw.githubusercontent.com/adiacla/vivienda/refs/heads/main/Examen_ID_NRC.ipynb)
     """,  unsafe_allow_html=True)
     st.markdown("Sube el PDF del badge obtenido en [Credly](https://www.credly.com/) tras completar el examen.")
     id_input = st.text_input("ID del estudiante", key="input_id")
@@ -664,5 +667,3 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
-
-
