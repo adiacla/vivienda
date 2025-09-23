@@ -18,7 +18,6 @@ from google import genai
 client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
 gemini_model = "gemini-2.0-flash"
 
-
 # ----------------------------
 # RUTA DB y CREACIÓN TABLAS
 # ----------------------------
@@ -672,5 +671,6 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
 
