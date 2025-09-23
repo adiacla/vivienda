@@ -15,7 +15,7 @@ from google import genai
 # ----------------------------
 # CONFIGURACIÓN GEMINI
 # ----------------------------
-client = genai.Client(api_key="AIzaSyDBK2Ou4-NS9kYjVrYtEAf8cwQ90k-d5uY")
+client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
 gemini_model = "gemini-2.0-flash"
 
 
@@ -672,4 +672,5 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
