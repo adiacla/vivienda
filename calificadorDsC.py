@@ -258,8 +258,13 @@ Criterios de evaluación:
 4. Optimización de hiperparámetros: función que pruebe combinaciones, evaluación con métricas (MSE, MAE).
 5. Informe y conclusiones: análisis de resultados, hallazgos del preprocesamiento, sensibilidad a hiperparámetros.
 
+
+Evalue solo lo que la plantilla pide en el notebook cargado, que es una plantilla. Y no quite puntos si hay mejores formas para realizar el ejercicio.
+Evalue solo lo que se pide en lasa celdas del notebook. Evalue que si realiza todos los puntos,
+si las celdas están vacias o no tiene el codigo requerido califique mal esos puntos.
+
 Genera:
-- Una calificación numérica entre 0 y 3.0.
+- Una calificación numérica entre 0 y 1.5.
 - Retroalimentación clara, profesional y técnica sobre los puntos anteriores.
 
 Código entregado por el estudiante:
