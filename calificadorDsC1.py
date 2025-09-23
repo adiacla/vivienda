@@ -407,7 +407,7 @@ st.markdown("### Realizado por Alfredo Diaz © UNB 2025")
 st.image(
     "https://apolo.unab.edu.co/files-asset/28174058/7-Alfredo-Antonio-Diaz-Claro.jpg",
     caption="Alfredo Antonio Diaz Claro",
-    width='stretch'
+    width=100
 )
 init_db()
 
@@ -683,6 +683,7 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
+
 
 
 
