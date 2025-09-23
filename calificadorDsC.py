@@ -15,7 +15,7 @@ from google import genai
 # ----------------------------
 # CONFIGURACIÓN GEMINI
 # ----------------------------
-client = genai.Client(api_key=os.environ["GOOGLE_API_KEY"])
+client = genai.Client(api_key="AIzaSyDBK2Ou4-NS9kYjVrYtEAf8cwQ90k-d5uY")
 gemini_model = "gemini-2.0-flash"
 
 
@@ -246,10 +246,19 @@ def evaluar_taller(contenido_estudiante: str):
     Devuelve (nota_taller, feedback) o (None, error_message)
     """
     prompt = f"""
-Eres un profesor experto en ciencia de datos y preprocesamiento de datos en Python.
-Evalúa y califica el código enviado por un estudiante para un taller práctico de preprocesamiento de datos de vivienda.
-... (omitido por brevedad: usa el prompt original que tenías) ...
+Eres un profesor experto en Ciencia de Datos y Redes Neuronales en Python (Keras/TensorFlow).
+Evalúa y califica el código enviado por un estudiante para un taller práctico de predicción de precios de vivienda con redes neuronales.
 
+Criterios de evaluación:
+1. Preprocesamiento de datos: EDA, imputación de valores nulos, manejo de outliers, escalado, división en entrenamiento y prueba.
+2. Implementación del modelo: uso de Keras, modelo Secuencial, capas densas, activación ReLU en capas ocultas y capa de salida lineal.
+3. Exploración de hiperparámetros: learning rate, número de capas y neuronas, epochs, batch size.
+4. Optimización de hiperparámetros: función que pruebe combinaciones, evaluación con métricas (MSE, MAE).
+5. Informe y conclusiones: análisis de resultados, hallazgos del preprocesamiento, sensibilidad a hiperparámetros.
+
+Verifique el el archivo cargada tiene celdas donde se realiza cada paso. Si las celdas estan comentadas, no las considereo si estan sin codigo tampoco.
+Igualemente si el codigo no corre o tiene errores, evalue el codigo y no la ejecucion.
+Ademas revise que el codigo siga las mejores practicas de Python y Keras y tiene la lógica correcta.
 Código entregado por el estudiante:
 {contenido_estudiante}
 
@@ -282,50 +291,60 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
     Evalúa un diccionario respuestas_estudiante: {1: 'texto', 2: 'texto', ...}
     Devuelve (nota_total_float, feedback_text_str, parsed_results_list_or_None)
     """
-    # (mantenemos tu prompt y lógica original; aquí se reutiliza)
+    import json, re
+
+    # Respuestas esperadas para 15 preguntas
     respuestas_esperadas = {
-        1: "Porque los algoritmos de ML no aceptan valores nulos. Ignorarlos puede hacer que fallen o den resultados sesgados. En el taller de preprocesamiento de vivienda vimos que imputar valores nulos evita pérdida de información y asegura que las variables puedan ser usadas en modelos. Esto se hace en la etapa inicial de limpieza de datos.",
-        2: "Porque las variables discretas/categóricas (como número de habitaciones) representan conteos enteros. Usar la moda conserva un valor válido (ej. 3 habitaciones), mientras que la media puede dar un número irreal (ej. 3.7). Esto se hace en la imputación de datos faltantes, garantizando que el dataset tenga valores consistentes.",
-        3: "Se eliminan duplicados para que ciertos registros no tengan más peso del que deberían en el entrenamiento. En el taller vimos que mantener duplicados puede sesgar el modelo y reducir la diversidad de los datos. Esto se hace en la fase de limpieza estructural del dataset.",
-        4: "Los algoritmos de ML solo aceptan entradas numéricas. Los encoders convierten categorías en números para que puedan ser procesadas en la etapa de transformación de variables. En el taller aplicamos OneHotEncoder para variables como el tipo de vivienda.",
-        5: "Se usa OrdinalEncoder cuando la variable categórica tiene un orden natural (ej. calidad baja < media < alta). OneHotEncoder perdería esa relación. Esto se aplica en la etapa de codificación según el tipo de variable.",
-        6: "Los outliers distorsionan medidas estadísticas como media y desviación estándar, y pueden desajustar los modelos haciendo que generalicen mal. En el taller los detectamos con boxplots antes de entrenar, dentro de la fase de análisis exploratorio y limpieza.",
-        7: "StandardScaler transforma los datos a media 0 y desviación estándar 1, útil para algoritmos sensibles a varianza (regresión, SVM). MinMaxScaler escala al rango [0,1], ideal para redes neuronales o KNN. Esto se hace en la etapa de normalización/estandarización.",
-        8: "El scaler debe ajustarse (fit) solo con datos de entrenamiento para evitar fuga de información. Si se ajusta con todo el dataset, se estaría usando información del test, contaminando la evaluación. Esto se aplica en la etapa de preparación de datos para modelado.",
-        9: "Guardar encoders y scalers con joblib permite reutilizarlos con datos nuevos en producción. Esto garantiza consistencia entre entrenamiento y predicción. En el taller vimos que se deben guardar los objetos entrenados junto al modelo.",
-        10: "El modelo de pago por uso de AWS evita inversiones iniciales en infraestructura. Permite escalar recursos de forma flexible según el preprocesamiento o entrenamiento que se necesite, en lugar de comprar servidores físicos costosos.",
-        11: "La escalabilidad automática en AWS ajusta recursos según la carga, evitando caídas o costos innecesarios. A diferencia de un servidor físico, permite entrenar modelos grandes en picos de trabajo y liberar recursos después.",
-        12: "IaaS ofrece infraestructura (máquinas virtuales), PaaS plataformas para desarrollo, y SaaS aplicaciones listas para usar. Comprenderlos es clave para elegir la opción adecuada según la etapa del pipeline: IaaS para cómputo flexible, PaaS para desplegar modelos, y SaaS para consumir soluciones ya listas."
+        1: "Un modelo secuencial en Keras se define usando keras.Sequential(), agregando capa por capa. Es útil para redes simples donde cada capa tiene un único flujo de datos. Ventajas: fácil de implementar y depurar. Limitaciones: no permite múltiples entradas o salidas ni arquitecturas complejas con saltos entre capas, lo cual requiere el API funcional.",
+        2: "La función de activación introduce no linealidad al perceptrón, permitiendo al modelo aprender relaciones complejas. Activaciones inapropiadas pueden causar saturación (sigmoid/tanh) o gradientes nulos, afectando la convergencia y la velocidad de entrenamiento.",
+        3: "En clasificación binaria se suele usar 'sigmoid' como activación en la capa de salida y 'binary_crossentropy' como función de pérdida. En clasificación multiclase se usa 'softmax' con 'categorical_crossentropy'. Elegir incorrectamente puede dar predicciones inconsistentes y afectar la optimización.",
+        4: "En regresión lineal se usa típicamente activación lineal (None) en la salida y 'mean_squared_error' o 'mean_absolute_error' como función de pérdida. Esto permite que la red prediga cualquier valor continuo sin limitarlo a un rango específico.",
+        5: "El número de capas densas y neuronas se ajusta para balancear capacidad del modelo y riesgo de overfitting. Pocas capas/neuronas → underfitting, demasiadas → overfitting. Se recomienda empezar con pocas capas y aumentar según desempeño en validación, usando regularización si es necesario.",
+        6: "El batch size afecta el cálculo de gradientes: batches pequeños generan entrenamiento más ruidoso pero con mejor generalización, batches grandes entrenan más rápido pero pueden estancarse en mínimos locales. El número de epochs controla cuántas veces se recorre todo el dataset; demasiados epochs pueden overfit y pocos underfit.",
+        7: "SGD es básico y puede ser lento; Adam combina momentum y adaptación de learning rate, acelerando la convergencia y estabilidad; RMSprop adapta learning rate para cada parámetro, útil en problemas con gradientes ruidosos. La elección afecta rapidez y estabilidad del entrenamiento.",
+        8: "Accuracy es útil para problemas balanceados, pero en datasets desbalanceados métricas como precision, recall y F1-score son más informativas. AUC mide capacidad de discriminación. Elegir la métrica adecuada permite evaluar correctamente el desempeño según el tipo de problema.",
+        9: "La inicialización de pesos evita que los gradientes se saturen o se vuelvan demasiado pequeños/grandes. Estrategias comunes: He (para ReLU) y Glorot/Xavier (para sigmoide/tanh). Una buena inicialización mejora la velocidad de convergencia y evita que el modelo quede atrapado en mínimos subóptimos.",
+        10: "El método fit entrena el modelo pasando los datos de entrada y salida. Parámetros críticos: batch_size (número de muestras por paso), epochs (cuántas veces recorrer todo el dataset), validation_split o validation_data, callbacks y shuffle. Ajustar estos parámetros impacta la eficiencia y la generalización.",
+        11: "Guardar modelos con model.save() o pesos con save_weights() permite reanudar entrenamiento o hacer inferencia en producción sin volver a entrenar. Esto mantiene la consistencia entre entrenamiento y despliegue, y facilita reproducibilidad.",
+        12: "EC2 permite provisionar instancias escalables y especializadas (GPU/CPU) para entrenamiento de ML, evitando inversión en hardware físico. Comparado con servidores locales, ofrece flexibilidad, escalabilidad y pago por uso, adaptándose a necesidades variables de cómputo.",
+        13: "S3 permite almacenar grandes volúmenes de datos de forma duradera y escalable. Integrado con Keras, se puede cargar datasets en memoria o en streaming durante el entrenamiento, facilitando el manejo eficiente de datos masivos y la integración con pipelines de ML.",
+        14: "Auto Scaling ajusta dinámicamente el número de instancias EC2 según la carga de trabajo. Esto es útil para entrenamientos intermitentes de redes neuronales grandes, evitando costos innecesarios en periodos de baja demanda y asegurando recursos suficientes en picos de trabajo.",
+        15: "IaaS (EC2) ofrece infraestructura virtualizable, ideal para entrenar y experimentar modelos. PaaS (SageMaker) permite entrenar y desplegar modelos sin preocuparse por la infraestructura subyacente. SaaS ofrece soluciones listas para usar (como Rekognition), útil para consumir modelos sin desarrollar. La elección depende de si se busca control, flexibilidad o rapidez de despliegue."
     }
 
     n_preg = len(respuestas_esperadas)
-    per_q = round(3.0 / n_preg, 4)  # cada pregunta vale 0.25
+    per_q = round(3.0 / n_preg, 2)  # cada pregunta vale 0.20 (3.0/15)
 
+    # Construcción del prompt
     prompt = f"""Eres un profesor experto en Ciencia de Datos y AWS.
-        Evalúa las siguientes {n_preg} respuestas de un estudiante comparándolas con la 'respuesta esperada'.
+    Evalúa las siguientes {n_preg} respuestas de un estudiante comparándolas con la 'respuesta esperada'.
 
-        Instrucciones IMPORTANTES:
-        Devuelve SOLO un JSON válido en este formato:
-        {{
-        "results": [
-            {{"question": 1, "score": 0.25, "feedback": "Comentario corto"}},
-            {{"question": 2, "score": 0.20, "feedback": "Comentario corto"}}
-        ],
-        "total": 2.45
-        }}
+    Instrucciones IMPORTANTES:
+    Devuelve SOLO un JSON válido en este formato:
+    {{
+    "results": [
+        {{"question": 1, "score": 0.20, "feedback": "Comentario corto"}},
+        ...
+    ],
+    "total": 3.0
+    }}
 
-        Reglas:
-        - "score" es un número decimal entre 0 y {per_q}, con dos decimales.
-        - "total" es la suma de los scores, redondeada a 2 decimales y máximo 3.0.
-        - No devuelvas texto fuera del JSON.
-        A continuación incluyo las respuestas esperadas y luego las respuestas del estudiante.
-        """
-    # Añadir respuestas esperadas
+    Reglas:
+    - "score" es un número decimal entre 0 y {per_q}, con dos decimales.
+    - "total" es la suma de los scores, redondeada a 2 decimales y máximo 3.0.
+    - No devuelvas texto fuera del JSON.
+    A continuación incluyo las respuestas esperadas y luego las respuestas del estudiante.
+    """
+
     for k in range(1, n_preg+1):
         prompt += f"\nEsperada {k}: {respuestas_esperadas[k]}"
     for k in range(1, n_preg+1):
         resp = respuestas_estudiante.get(k, "").replace("\n", " ").strip()
         prompt += f"\nEstudiante {k}: {resp}"
+
+    # Aquí iría la llamada a la API de evaluación (client.models.generate_content)
+    # El resto del código que parsea JSON y construye feedback se mantiene igual
+    # ...
 
     try:
         response = client.models.generate_content(
@@ -438,7 +457,7 @@ with tabs[1]:
 # Pestaña 3 - Evaluar Taller
 # ----------------------------
 with tabs[2]:
-    st.header("Evaluar Taller de Preprocesamiento de Datos")
+    st.header("Evaluar Taller de Redes Neuronales")
 
     archivo_taller = st.file_uploader(
         "Subir solución en Python (.py o .ipynb)", 
@@ -446,13 +465,18 @@ with tabs[2]:
         key="uploader_taller"
     )
 
-    comentarios_taller = st.text_area("Comentarios / Observaciones (opcional)", height=120, key="comentarios_taller")
+    comentarios_taller = st.text_area(
+        "Comentarios / Observaciones (opcional)", 
+        height=120, 
+        key="comentarios_taller"
+    )
 
     if st.button("Evaluar Taller", key="boton_evaluar_taller"):
         if archivo_taller is not None and "id_estudiante" in st.session_state and "nrc_curso" in st.session_state:
             try:
                 nombre = archivo_taller.name.lower()
 
+                # Leer contenido según tipo de archivo
                 if nombre.endswith(".py"):
                     contenido_estudiante = archivo_taller.read().decode("utf-8", errors="ignore")
 
@@ -469,9 +493,11 @@ with tabs[2]:
                     contenido_estudiante = None
 
                 if contenido_estudiante:
-                    nota_taller, feedback = evaluar_taller(contenido_estudiante)
+                    # Evaluar el taller usando la nueva función para redes neuronales
+                    nota_taller, feedback = evaluar_taller_redes_neuronales(contenido_estudiante)
+
                     if nota_taller is not None:
-                        # Guardar en tabla taller_resultados (no en badges)
+                        # Guardar resultado
                         guardar_resultado_taller(
                             st.session_state["id_estudiante"],
                             st.session_state["nrc_curso"],
@@ -479,7 +505,7 @@ with tabs[2]:
                             feedback,
                             comentarios_taller or ""
                         )
-                        st.success(f"✅ Nota del taller guardada: {nota_taller} / 1.5")
+                        st.success(f"✅ Nota del taller guardada: {nota_taller} / 3.0")
                         st.session_state["nota_taller"] = nota_taller
                     else:
                         st.warning("⚠️ No se pudo calcular la nota automáticamente.")
@@ -489,10 +515,14 @@ with tabs[2]:
 
                 else:
                     st.error("No se pudo extraer el contenido del archivo.")
+
             except Exception as e:
                 st.error(f"❌ Error al procesar el archivo: {e}")
+
         else:
-            st.error("⚠️ Debes subir un archivo y haber cargado ID/NRC en la pestaña 'Cargar PDF'.")
+            st.error(
+                "⚠️ Debes subir un archivo y haber cargado ID/NRC en la pestaña 'Cargar PDF'."
+            )
 
 # ----------------------------
 # Pestaña 4 - Evaluar Cuestionario
@@ -501,19 +531,26 @@ with tabs[3]:
     st.header("Cuestionario de Preguntas Abiertas")
 
     preguntas_abiertas = [
-        "¿Por qué en el preprocesamiento es importante manejar los valores nulos y qué consecuencias tendría ignorarlos?",
-        "¿Por qué en variables discretas (como número de habitaciones o baños) es más apropiado usar la moda para imputar valores faltantes en lugar de la media?",
-        "¿Por qué se eliminan duplicados en un dataset antes de entrenar un modelo?",
-        "¿Por qué se utilizan encoders para transformar variables categóricas en valores numéricos?",
-        "¿En qué casos se debe usar un OrdinalEncoder en lugar de un OneHotEncoder?",
-        "¿Por qué se detectan y eliminan outliers antes del entrenamiento de modelos?",
-        "¿Cuál es la diferencia entre usar StandardScaler y MinMaxScaler y en qué escenarios se usan?",
-        "¿Por qué se recomienda ajustar el scaler solo con los datos de entrenamiento?",
-        "¿Por qué es importante guardar con joblib los transformadores como encoders o scalers?",
-        "¿Por qué el modelo de pago por uso en AWS es ventajoso frente a la compra de infraestructura tradicional?",
-        "¿Cuál es la ventaja de la escalabilidad automática (Auto Scaling) en la nube frente a un servidor físico?",
-        "¿Cuál es la diferencia entre IaaS, PaaS y SaaS en AWS y por qué es importante comprender estos modelos?"
+        # Redes neuronales con Keras
+        "¿Cómo se define un modelo secuencial en Keras y cuáles son sus ventajas y limitaciones frente a modelos funcionales?",
+        "En un perceptrón multicapa, ¿por qué es importante elegir correctamente la función de activación y cómo afecta a la convergencia del modelo?",
+        "¿Cuál es la diferencia entre clasificación binaria y multiclase en Keras, y qué función de pérdida y activación se recomienda para cada caso?",
+        "En un modelo de regresión lineal implementado con Keras, ¿qué función de activación y pérdida se utilizan, y por qué?",
+        "¿Cómo se determina el número óptimo de capas densas y neuronas por capa en un modelo Keras para evitar underfitting y overfitting?",
+        "Explique cómo la selección del tamaño del batch y del número de epochs influye en el entrenamiento y la generalización de un modelo Keras.",
+        "¿Cuál es la diferencia entre optimizadores como SGD, Adam y RMSprop, y cómo influye su elección en la velocidad y estabilidad del entrenamiento?",
+        "¿Cómo se utilizan métricas como accuracy, precision, recall y AUC en Keras, y por qué algunas métricas son más adecuadas según el tipo de problema?",
+        "¿Qué efectos tiene la inicialización de pesos en redes neuronales y cuáles son las estrategias más comunes para mejorar la convergencia?",
+        "Explique cómo funciona el método fit en Keras y qué parámetros son críticos para controlar el entrenamiento de un modelo.",
+        "¿Por qué es importante guardar modelos, pesos y optimizadores en Keras, y cómo se hace de forma que permita reanudar el entrenamiento o hacer inferencia en producción?",
+        
+        # AWS Cloud Foundation
+        "En AWS, ¿cuáles son las ventajas de usar EC2 para entrenar modelos de machine learning frente a usar servidores físicos locales?",
+        "Explique cómo S3 puede integrarse con un pipeline de entrenamiento de redes neuronales para manejo eficiente de datasets grandes.",
+        "¿Qué beneficios ofrece el Auto Scaling en AWS cuando se entrenan modelos que requieren grandes recursos computacionales de manera intermitente?",
+        "Compare los modelos IaaS, PaaS y SaaS en AWS y explique cuál sería más adecuado para desplegar y consumir modelos de deep learning."
     ]
+
 
     respuestas_usuario = {}
     for i, pregunta in enumerate(preguntas_abiertas, start=1):
@@ -627,4 +664,3 @@ with tabs[4]:
 
 
 st.write("")  # espacio final
-
