@@ -536,7 +536,7 @@ with tabs[2]:
 with tabs[3]:
     st.header("Cuestionario de Preguntas Abiertas")
 
-    preguntas = [
+    preguntas_abiertas = [
     "¿Cuál es la importancia de normalizar las variables de entrada antes de entrenar un modelo de red neuronal, y qué técnicas pueden usarse para ello?",
     "Explique cómo se maneja una variable categórica como 'Origin' en el dataset Auto MPG y por qué se utiliza one-hot encoding en este caso.",
     "¿Qué función de pérdida y métricas se utilizan en un problema de regresión en Keras y por qué no son adecuadas las métricas de clasificación?",
