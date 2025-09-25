@@ -350,7 +350,6 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
     for k in range(1, n_preg+1):
         resp = respuestas_estudiante.get(k, "").replace("\n", " ").strip()
         prompt += f"\nEstudiante {k}: {resp}"
-        ...
 
     try:
         response = client.models.generate_content(
