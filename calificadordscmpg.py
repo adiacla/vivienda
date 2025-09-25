@@ -249,25 +249,23 @@ def evaluar_taller_redes_neuronales(contenido_estudiante: str):
     """
     prompt = f"""
 Eres un profesor experto en Ciencia de Datos y Redes Neuronales en Python (Keras/TensorFlow).
-Evalúa y califica el código enviado por un estudiante para un taller práctico de predicción de precios de vivienda con redes neuronales.
+Evalúa y califica el código enviado por un estudiante para un taller práctico de predicción de Predecir eficiencia de gasolina con redes neuronales para regresión.
 
 Criterios de evaluación:
+El archivo cargado tiene la plantilla de todas las explicaciones y activdades que el estudiante debe realizar en celdad de texto del ipynb, se debe calificar son las celdas de código que él debe commpletar.
 1. Preprocesamiento de datos: EDA, imputación de valores nulos, manejo de outliers, escalado, división en entrenamiento y prueba.
 2. Implementación del modelo: uso de Keras, modelo Secuencial, capas densas, activación ReLU en capas ocultas y capa de salida lineal.
 3. Exploración de hiperparámetros: learning rate, número de capas y neuronas, epochs, batch size.
 4. Optimización de hiperparámetros: función que pruebe combinaciones, evaluación con métricas (MSE, MAE).
-5. Informe y conclusiones: análisis de resultados, hallazgos del preprocesamiento, sensibilidad a hiperparámetros.
-
-
-Evalue solo lo que la plantilla pide en el notebook cargado, que es una plantilla. Y no quite puntos si hay mejores formas para realizar el ejercicio.
-Evalue solo lo que se pide en lasa celdas del notebook. Evalue que si realiza todos los puntos,
-si las celdas están vacias o no tiene el codigo requerido califique mal esos puntos.
+5. Informe y conclusiones: en la conclusión debe tener explicación del proceso y análisis de resultados, hallazgos del preprocesamiento.
+6. No quite puntos si hay mejores formas para realizar el ejercicio, porque las instrucciones están en el notebook.
+7. Si hay celdas de cóigo vacias o no tiene el codigo requerido califique mal esos puntos.
 
 Genera:
 - Una calificación numérica entre 0 y 1.5.
 - Retroalimentación clara, profesional y técnica sobre los puntos anteriores.
 
-Código entregado por el estudiante:
+Notebook entregado por el estudiante con las celdad de código:
 {contenido_estudiante}
 """
 
@@ -326,6 +324,9 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
     # Construcción del prompt
     prompt = f"""Eres un profesor experto en Ciencia de Datos y AWS.
     Evalúa las siguientes {n_preg} respuestas de un estudiante comparándolas con la 'respuesta esperada'.
+    Devuelve SIEMPRE 15 resultados en "results", uno por cada pregunta del 1 al 15.
+    -Si el estudiante no responde, asigna score 0.00 y feedback "Sin respuesta".
+    -No omitas ninguna pregunta.
 
     Instrucciones IMPORTANTES:
     Devuelve SOLO un JSON válido en este formato:
@@ -349,10 +350,7 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
     for k in range(1, n_preg+1):
         resp = respuestas_estudiante.get(k, "").replace("\n", " ").strip()
         prompt += f"\nEstudiante {k}: {resp}"
-
-    # Aquí iría la llamada a la API de evaluación (client.models.generate_content)
-    # El resto del código que parsea JSON y construye feedback se mantiene igual
-    # ...
+        ...
 
     try:
         response = client.models.generate_content(
