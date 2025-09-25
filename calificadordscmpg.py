@@ -301,21 +301,21 @@ def evaluar_respuestas_abiertas(respuestas_estudiante):
 
     # Respuestas esperadas para 15 preguntas
     respuestas_esperadas = {
-        1: "Un modelo secuencial en Keras se define usando keras.Sequential(), agregando capa por capa. Es útil para redes simples donde cada capa tiene un único flujo de datos. Ventajas: fácil de implementar y depurar. Limitaciones: no permite múltiples entradas o salidas ni arquitecturas complejas con saltos entre capas, lo cual requiere el API funcional.",
-        2: "La función de activación introduce no linealidad al perceptrón, permitiendo al modelo aprender relaciones complejas. Activaciones inapropiadas pueden causar saturación (sigmoid/tanh) o gradientes nulos, afectando la convergencia y la velocidad de entrenamiento.",
-        3: "En clasificación binaria se suele usar 'sigmoid' como activación en la capa de salida y 'binary_crossentropy' como función de pérdida. En clasificación multiclase se usa 'softmax' con 'categorical_crossentropy'. Elegir incorrectamente puede dar predicciones inconsistentes y afectar la optimización.",
-        4: "En regresión lineal se usa típicamente activación lineal (None) en la salida y 'mean_squared_error' o 'mean_absolute_error' como función de pérdida. Esto permite que la red prediga cualquier valor continuo sin limitarlo a un rango específico.",
-        5: "El número de capas densas y neuronas se ajusta para balancear capacidad del modelo y riesgo de overfitting. Pocas capas/neuronas → underfitting, demasiadas → overfitting. Se recomienda empezar con pocas capas y aumentar según desempeño en validación, usando regularización si es necesario.",
-        6: "El batch size afecta el cálculo de gradientes: batches pequeños generan entrenamiento más ruidoso pero con mejor generalización, batches grandes entrenan más rápido pero pueden estancarse en mínimos locales. El número de epochs controla cuántas veces se recorre todo el dataset; demasiados epochs pueden overfit y pocos underfit.",
-        7: "SGD es básico y puede ser lento; Adam combina momentum y adaptación de learning rate, acelerando la convergencia y estabilidad; RMSprop adapta learning rate para cada parámetro, útil en problemas con gradientes ruidosos. La elección afecta rapidez y estabilidad del entrenamiento.",
-        8: "Accuracy es útil para problemas balanceados, pero en datasets desbalanceados métricas como precision, recall y F1-score son más informativas. AUC mide capacidad de discriminación. Elegir la métrica adecuada permite evaluar correctamente el desempeño según el tipo de problema.",
-        9: "La inicialización de pesos evita que los gradientes se saturen o se vuelvan demasiado pequeños/grandes. Estrategias comunes: He (para ReLU) y Glorot/Xavier (para sigmoide/tanh). Una buena inicialización mejora la velocidad de convergencia y evita que el modelo quede atrapado en mínimos subóptimos.",
-        10: "El método fit entrena el modelo pasando los datos de entrada y salida. Parámetros críticos: batch_size (número de muestras por paso), epochs (cuántas veces recorrer todo el dataset), validation_split o validation_data, callbacks y shuffle. Ajustar estos parámetros impacta la eficiencia y la generalización.",
-        11: "Guardar modelos con model.save() o pesos con save_weights() permite reanudar entrenamiento o hacer inferencia en producción sin volver a entrenar. Esto mantiene la consistencia entre entrenamiento y despliegue, y facilita reproducibilidad.",
-        12: "EC2 permite provisionar instancias escalables y especializadas (GPU/CPU) para entrenamiento de ML, evitando inversión en hardware físico. Comparado con servidores locales, ofrece flexibilidad, escalabilidad y pago por uso, adaptándose a necesidades variables de cómputo.",
-        13: "S3 permite almacenar grandes volúmenes de datos de forma duradera y escalable. Integrado con Keras, se puede cargar datasets en memoria o en streaming durante el entrenamiento, facilitando el manejo eficiente de datos masivos y la integración con pipelines de ML.",
-        14: "Auto Scaling ajusta dinámicamente el número de instancias EC2 según la carga de trabajo. Esto es útil para entrenamientos intermitentes de redes neuronales grandes, evitando costos innecesarios en periodos de baja demanda y asegurando recursos suficientes en picos de trabajo.",
-        15: "IaaS (EC2) ofrece infraestructura virtualizable, ideal para entrenar y experimentar modelos. PaaS (SageMaker) permite entrenar y desplegar modelos sin preocuparse por la infraestructura subyacente. SaaS ofrece soluciones listas para usar (como Rekognition), útil para consumir modelos sin desarrollar. La elección depende de si se busca control, flexibilidad o rapidez de despliegue."
+    1: "La normalización asegura que todas las variables de entrada estén en la misma escala, evitando que unas dominen sobre otras. Técnicas comunes son StandardScaler (media=0, varianza=1) o MinMaxScaler (escala [0,1]). Esto mejora la estabilidad y velocidad de convergencia del modelo.",
+    2: "La variable 'Origin' es categórica. Para usarla en una red se aplica one-hot encoding, creando columnas binarias (USA, Europe, Japan). Esto evita que el modelo interprete el código numérico como una relación ordinal.",
+    3: "En regresión se usan funciones de pérdida como MSE o MAE porque comparan valores continuos. Métricas como accuracy no son adecuadas porque están diseñadas para clasificación, no para predicción numérica.",
+    4: "Dividir en entrenamiento y prueba evita el sobreajuste y permite evaluar el desempeño en datos no vistos. Sin esta separación, el modelo podría memorizar en lugar de aprender patrones generales.",
+    5: "En regresión la capa de salida tiene una sola neurona con activación lineal (None), porque la tarea es predecir un valor continuo (ej. MPG). Si se usara sigmoid o softmax, se restringirían artificialmente los valores posibles.",
+    6: "Las funciones no lineales como ReLU permiten que la red aprenda relaciones complejas entre las variables. Sin no linealidad, la red sería equivalente a una regresión lineal sin capacidad de modelar patrones avanzados.",
+    7: "EarlyStopping detiene el entrenamiento cuando la pérdida de validación deja de mejorar. Esto previene el sobreajuste y ahorra tiempo de cómputo al evitar entrenar más de lo necesario.",
+    8: "Usar muchas capas y neuronas puede llevar a sobreajuste si no hay suficientes datos. El modelo memoriza en lugar de generalizar, requiriendo regularización o dropout para compensar.",
+    9: "Un gráfico de predicciones vs valores reales muestra qué tan cercanas están las predicciones a la diagonal. Si los puntos se alejan de la línea y=x, significa que el modelo tiene errores sistemáticos o baja precisión.",
+    10: "La distribución de errores indica sesgo y varianza del modelo. Si está centrada en cero, el modelo no tiene sesgo. Una dispersión amplia indica errores grandes e inestabilidad en las predicciones.",
+    11: "MAE mide el promedio de los errores absolutos, fácil de interpretar en la misma unidad de la variable. MSE penaliza más los errores grandes porque eleva al cuadrado las diferencias. Se usa MSE cuando interesa castigar desviaciones grandes.",
+    12: "RMSprop adapta el learning rate a cada parámetro, acelerando el entrenamiento en problemas con gradientes ruidosos. Adam combina ventajas de RMSprop y momentum, mientras que SGD puro es más simple pero lento en converger.",
+    13: "Guardar el modelo y el scaler garantiza reproducibilidad. El scaler es necesario porque cualquier nuevo dato debe transformarse con las mismas estadísticas usadas en el entrenamiento. Sin esto, las predicciones serían inconsistentes.",
+    14: "Validation_split reserva una fracción del dataset de entrenamiento para validación. Esto ayuda a monitorear el desempeño del modelo en datos no vistos y a ajustar hiperparámetros sin usar el test set.",
+    15: "Streamlit permite crear aplicaciones interactivas donde el usuario ingresa variables (ej. peso, cilindros, origen del auto) y recibe predicciones en tiempo real. Esto facilita el despliegue del modelo a usuarios no técnicos."
     }
 
     n_preg = len(respuestas_esperadas)
@@ -536,26 +536,23 @@ with tabs[2]:
 with tabs[3]:
     st.header("Cuestionario de Preguntas Abiertas")
 
-    preguntas_abiertas = [
-        # Redes neuronales con Keras
-        "¿Cómo se define un modelo secuencial en Keras y cuáles son sus ventajas y limitaciones frente a modelos funcionales?",
-        "En un perceptrón multicapa, ¿por qué es importante elegir correctamente la función de activación y cómo afecta a la convergencia del modelo?",
-        "¿Cuál es la diferencia entre clasificación binaria y multiclase en Keras, y qué función de pérdida y activación se recomienda para cada caso?",
-        "En un modelo de regresión lineal implementado con Keras, ¿qué función de activación y pérdida se utilizan, y por qué?",
-        "¿Cómo se determina el número óptimo de capas densas y neuronas por capa en un modelo Keras para evitar underfitting y overfitting?",
-        "Explique cómo la selección del tamaño del batch y del número de epochs influye en el entrenamiento y la generalización de un modelo Keras.",
-        "¿Cuál es la diferencia entre optimizadores como SGD, Adam y RMSprop, y cómo influye su elección en la velocidad y estabilidad del entrenamiento?",
-        "¿Cómo se utilizan métricas como accuracy, precision, recall y AUC en Keras, y por qué algunas métricas son más adecuadas según el tipo de problema?",
-        "¿Qué efectos tiene la inicialización de pesos en redes neuronales y cuáles son las estrategias más comunes para mejorar la convergencia?",
-        "Explique cómo funciona el método fit en Keras y qué parámetros son críticos para controlar el entrenamiento de un modelo.",
-        "¿Por qué es importante guardar modelos, pesos y optimizadores en Keras, y cómo se hace de forma que permita reanudar el entrenamiento o hacer inferencia en producción?",
-        
-        # AWS Cloud Foundation
-        "En AWS, ¿cuáles son las ventajas de usar EC2 para entrenar modelos de machine learning frente a usar servidores físicos locales?",
-        "Explique cómo S3 puede integrarse con un pipeline de entrenamiento de redes neuronales para manejo eficiente de datasets grandes.",
-        "¿Qué beneficios ofrece el Auto Scaling en AWS cuando se entrenan modelos que requieren grandes recursos computacionales de manera intermitente?",
-        "Compare los modelos IaaS, PaaS y SaaS en AWS y explique cuál sería más adecuado para desplegar y consumir modelos de deep learning."
-    ]
+ preguntas = [
+    "¿Cuál es la importancia de normalizar las variables de entrada antes de entrenar un modelo de red neuronal, y qué técnicas pueden usarse para ello?",
+    "Explique cómo se maneja una variable categórica como 'Origin' en el dataset Auto MPG y por qué se utiliza one-hot encoding en este caso.",
+    "¿Qué función de pérdida y métricas se utilizan en un problema de regresión en Keras y por qué no son adecuadas las métricas de clasificación?",
+    "En el contexto del taller, ¿qué ventajas tiene dividir el dataset en entrenamiento y prueba, y qué problemas se evitarían al hacerlo?",
+    "¿Cuál es el rol de la capa de salida en un modelo de regresión con Keras y por qué se utiliza una única neurona sin función de activación?",
+    "Explique por qué se utilizan funciones de activación no lineales como ReLU en las capas ocultas de una red neuronal.",
+    "¿Qué impacto tiene usar EarlyStopping durante el entrenamiento del modelo y cómo ayuda a evitar el sobreajuste?",
+    "En el taller se utilizaron dos capas densas de 64 neuronas. ¿Qué riesgos se corren si se usan muchas más capas y neuronas?",
+    "¿Cómo se interpreta un gráfico de predicciones vs valores reales en un problema de regresión, y qué indica si los puntos se alejan de la diagonal?",
+    "¿Por qué es útil analizar la distribución de los errores de predicción y qué información puede aportar sobre el desempeño del modelo?",
+    "Explique las diferencias entre MAE y MSE como métricas de evaluación y en qué casos conviene una sobre la otra.",
+    "¿Cuál es la función del optimizador RMSprop en el entrenamiento y cómo se compara con Adam o SGD en términos de convergencia?",
+    "En el taller se guardó tanto el modelo como el scaler. ¿Por qué es importante guardar ambos para la inferencia en producción?",
+    "¿Qué consideraciones deben tenerse en cuenta al usar un conjunto de validación (validation_split) en el método fit de Keras?",
+    "¿Cómo se integraría una aplicación de Streamlit con un modelo Keras entrenado y qué ventajas tiene para la visualización y despliegue de resultados?"
+]
 
 
     respuestas_usuario = {}
