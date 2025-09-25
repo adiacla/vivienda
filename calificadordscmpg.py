@@ -255,11 +255,11 @@ Criterios de evaluación:
 El archivo cargado tiene la plantilla de todas las explicaciones y activdades que el estudiante debe realizar en celdad de texto del ipynb, se debe calificar son las celdas de código que él debe commpletar.
 1. Preprocesamiento de datos: EDA, imputación de valores nulos, manejo de outliers, escalado, división en entrenamiento y prueba.
 2. Implementación del modelo: uso de Keras, modelo Secuencial, capas densas, activación ReLU en capas ocultas y capa de salida lineal.
-3. Exploración de hiperparámetros: learning rate, número de capas y neuronas, epochs, batch size.
-4. Optimización de hiperparámetros: función que pruebe combinaciones, evaluación con métricas (MSE, MAE).
+3. Que haya definido bien la red nueronal con learning rate, número de capas y neuronas, epochs, batch size.
+4. Evaluación y graficas:  Que muestre la evaluación con métricas (MSE, MAE) y las gráficas de perdidas y metricias
 5. Informe y conclusiones: en la conclusión debe tener explicación del proceso y análisis de resultados, hallazgos del preprocesamiento.
 6. No quite puntos si hay mejores formas para realizar el ejercicio, porque las instrucciones están en el notebook.
-7. Si hay celdas de cóigo vacias o no tiene el codigo requerido califique mal esos puntos.
+7. Si hay celdas de código vacias o no tiene el codigo requerido califique mal esos puntos.
 
 Genera:
 - Una calificación numérica entre 0 y 1.5.
