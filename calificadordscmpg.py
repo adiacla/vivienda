@@ -536,7 +536,7 @@ with tabs[2]:
 with tabs[3]:
     st.header("Cuestionario de Preguntas Abiertas")
 
- preguntas = [
+    preguntas = [
     "¿Cuál es la importancia de normalizar las variables de entrada antes de entrenar un modelo de red neuronal, y qué técnicas pueden usarse para ello?",
     "Explique cómo se maneja una variable categórica como 'Origin' en el dataset Auto MPG y por qué se utiliza one-hot encoding en este caso.",
     "¿Qué función de pérdida y métricas se utilizan en un problema de regresión en Keras y por qué no son adecuadas las métricas de clasificación?",
@@ -552,7 +552,7 @@ with tabs[3]:
     "En el taller se guardó tanto el modelo como el scaler. ¿Por qué es importante guardar ambos para la inferencia en producción?",
     "¿Qué consideraciones deben tenerse en cuenta al usar un conjunto de validación (validation_split) en el método fit de Keras?",
     "¿Cómo se integraría una aplicación de Streamlit con un modelo Keras entrenado y qué ventajas tiene para la visualización y despliegue de resultados?"
-]
+    ]
 
 
     respuestas_usuario = {}
